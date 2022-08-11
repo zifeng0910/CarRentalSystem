@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yjq.programmer.dao.RentalMapper">
+  <resultMap id="BaseResultMap" type="com.yjq.programmer.domain.Rental">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="user_id" jdbcType="CHAR" property="userId" />
+    <result column="car_id" jdbcType="CHAR" property="carId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
+    <result column="day_price" jdbcType="DECIMAL" property="dayPrice" />
+    <result column="pledge_price" jdbcType="DECIMAL" property="pledgePrice" />
+    <result column="rental_day" jdbcType="INTEGER" property="rentalDay" />
+    <result column="reply" jdbcType="VARCHAR" property="reply" />
+    <result column="no" jdbcType="VARCHAR" property="no" />
+    <result column="seller_id" jdbcType="CHAR" property="sellerId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, create_time, user_id, car_id, `state`, start_time, end_time, total_price, `name`,
+    photo, day_price, pledge_price, rental_day, reply, `no`, seller_id
+  </sql>
+  <select id="selectByExample" parameterType="com.yjq.programmer.domain.RentalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rental
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from rental
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from rental
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yjq.programmer.domain.RentalExample">
+    delete from rental
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yjq.programmer.domain.Rental">
+    insert into rental (id, create_time, user_id,
+      car_id, `state`, start_time,
+      end_time, total_price, `name`,
+      photo, day_price, pledge_price,
+      rental_day, reply, `no`,
+      seller_id)
+    values (#{id,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=CHAR},
+      #{carId,jdbcType=CHAR}, #{state,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{totalPrice,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR},
+      #{photo,jdbcType=VARCHAR}, #{dayPrice,jdbcType=DECIMAL}, #{pledgePrice,jdbcType=DECIMAL},
+      #{rentalDay,jdbcType=INTEGER}, #{reply,jdbcType=VARCHAR}, #{no,jdbcType=VARCHAR},
+      #{sellerId,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yjq.programmer.domain.Rental">
+    insert into rental
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="carId != null">
+        car_id,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="photo != null">
+        photo,
+      </if>
+      <if test="dayPrice != null">
+        day_price,
+      </if>
+      <if test="pledgePrice != null">
+        pledge_price,
+      </if>
+      <if test="rentalDay != null">
+        rental_day,
+      </if>
+      <if test="reply != null">
+        reply,
+      </if>
+      <if test="no != null">
+        `no`,
+      </if>
+      <if test="sellerId != null">
+        seller_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="carId != null">
+        #{carId,jdbcType=CHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null">
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="dayPrice != null">
+        #{dayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pledgePrice != null">
+        #{pledgePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="rentalDay != null">
+        #{rentalDay,jdbcType=INTEGER},
+      </if>
+      <if test="reply != null">
+        #{reply,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null">
+        #{sellerId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yjq.programmer.domain.RentalExample" resultType="java.lang.Integer">
+    select count(*) from rental
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rental
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=CHAR},
+      </if>
+      <if test="record.carId != null">
+        car_id = #{record.carId,jdbcType=CHAR},
+      </if>
+      <if test="record.state != null">
+        `state` = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.totalPrice != null">
+        total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.photo != null">
+        photo = #{record.photo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dayPrice != null">
+        day_price = #{record.dayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pledgePrice != null">
+        pledge_price = #{record.pledgePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rentalDay != null">
+        rental_day = #{record.rentalDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.reply != null">
+        reply = #{record.reply,jdbcType=VARCHAR},
+      </if>
+      <if test="record.no != null">
+        `no` = #{record.no,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sellerId != null">
+        seller_id = #{record.sellerId,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rental
+    set id = #{record.id,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=CHAR},
+      car_id = #{record.carId,jdbcType=CHAR},
+      `state` = #{record.state,jdbcType=INTEGER},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      total_price = #{record.totalPrice,jdbcType=DECIMAL},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      photo = #{record.photo,jdbcType=VARCHAR},
+      day_price = #{record.dayPrice,jdbcType=DECIMAL},
+      pledge_price = #{record.pledgePrice,jdbcType=DECIMAL},
+      rental_day = #{record.rentalDay,jdbcType=INTEGER},
+      reply = #{record.reply,jdbcType=VARCHAR},
+      `no` = #{record.no,jdbcType=VARCHAR},
+      seller_id = #{record.sellerId,jdbcType=CHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yjq.programmer.domain.Rental">
+    update rental
+    <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="carId != null">
+        car_id = #{carId,jdbcType=CHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="photo != null">
+        photo = #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="dayPrice != null">
+        day_price = #{dayPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="pledgePrice != null">
+        pledge_price = #{pledgePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="rentalDay != null">
+        rental_day = #{rentalDay,jdbcType=INTEGER},
+      </if>
+      <if test="reply != null">
+        reply = #{reply,jdbcType=VARCHAR},
+      </if>
+      <if test="no != null">
+        `no` = #{no,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null">
+        seller_id = #{sellerId,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yjq.programmer.domain.Rental">
+    update rental
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=CHAR},
+      car_id = #{carId,jdbcType=CHAR},
+      `state` = #{state,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      `name` = #{name,jdbcType=VARCHAR},
+      photo = #{photo,jdbcType=VARCHAR},
+      day_price = #{dayPrice,jdbcType=DECIMAL},
+      pledge_price = #{pledgePrice,jdbcType=DECIMAL},
+      rental_day = #{rentalDay,jdbcType=INTEGER},
+      reply = #{reply,jdbcType=VARCHAR},
+      `no` = #{no,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=CHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
