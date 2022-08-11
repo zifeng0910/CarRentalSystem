@@ -5,4 +5,3 @@ Project function: This project is divided into three roles: customer, sales and 
 Application technology: SpringBoot + React + MySQL + MyBatis + Redis + Antd
 Runtime environment: IntelliJ IDEA2019.3.5 + MySQL5.7 (included in the project package) + Redis5.0.5 (included in the project package) + JDK1.8 + Maven3.6.3 (included in the project package) + Node14.16.1 (included in the project package)
 
-Translated with www.DeepL.com/Translator (free version)
